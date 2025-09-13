@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-5">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h2 class="h4 mb-3">Create a new post</h2>
+        <form action="/posts" method="POST" class="vstack gap-3">
+          <div>
+            <label class="form-label">Author</label>
+            <input name="author" class="form-control" placeholder="Your name" required />
+          </div>
+          <div>
+            <label class="form-label">Title</label>
+            <input name="title" class="form-control" placeholder="Post title" required />
+          </div>
+          <div>
+            <label class="form-label">Content</label>
+            <textarea name="content" rows="6" class="form-control" placeholder="Write your blog post..." required></textarea>
+          </div>
+          <button class="btn btn-primary align-self-start">Publish</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-7" id="posts">
+    <h2 class="h4 mb-3">Posts</h2>
+    <% if (posts.length === 0) { %>
+      <div class="alert alert-info">No posts yet. Be the first to write one!</div>
+    <% } %>
+
+    <div class="vstack gap-3">
+      <% posts.forEach(p => { %>
+        <article class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="h5 mb-1"><%= p.title %></h3>
+            <div class="text-muted small mb-2">
+              by <strong><%= p.author %></strong> • <%= new Date(p.createdAt).toLocaleString() %>
+            </div>
+            <p class="mb-3"><%= p.content %></p>
+
+            <div class="d-flex gap-2">
+              <a class="btn btn-sm btn-outline-secondary" href="/posts/<%= p.id %>/edit">Edit</a>
+              <form action="/posts/<%= p.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this post?');">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

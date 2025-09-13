@@ -1,0 +1,3 @@
+body { background: #f7f7f9; }
+.card { border-radius: 1rem; }
+textarea, input, button { border-radius: 0.6rem !important; }
